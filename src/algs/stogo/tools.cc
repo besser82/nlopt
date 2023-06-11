@@ -314,7 +314,7 @@ double TBox::ClosestSide(RCRVector x) {
 
   //   Warning: The output of this functon is nonsense if the
   //   point X lies outside B. Should we try to detect this case?
-  
+
   double dist, tmp ;
   int n=GetDim();
   dist=DBL_MAX;
@@ -328,7 +328,7 @@ double TBox::ClosestSide(RCRVector x) {
 double TBox::FarthestSide(RCRVector x) {
   // Returns the longest distance from point X to the box B.
   //   Same comment apply here as in ClosestSide(X)
-    
+
   double dist, tmp;
   int n=GetDim();
   dist=DBL_MIN;

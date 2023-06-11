@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /* Generation of Sobol sequences in up to 1111 dimensions, based on the
@@ -79,7 +79,7 @@ typedef struct nlopt_soboldata_s {
  * This code uses a 32-bit version of algorithm to find the rightmost
  * one bit in Knuth, _The Art of Computer Programming_, volume 4A
  * (draft fascicle), section 7.1.3, "Bitwise tricks and
- * techniques." 
+ * techniques."
  *
  * Assumes n has a zero bit, i.e. n < 2^32 - 1.
  *
@@ -98,7 +98,7 @@ static unsigned rightzero32(uint32_t n)
     n = a * (n & (-n)); /* same as below, but suppress spurious warning/error with MS compiler about negating unsigned int */
 #else
     n = a * (n & (-n)); /* store in n to make sure mult. is 32 bits */
-#endif      
+#endif
     return decode[n >> 27];
 #endif
 }

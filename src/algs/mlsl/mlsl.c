@@ -7,28 +7,28 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /* Multi-Level Single-Linkage (MLSL) algorithm for
    global optimization by random local optimizations (a multistart algorithm
-   with "clustering" to avoid repeated detection of the same local minimum), 
-   modified to optionally use a Sobol' low-discrepancy sequence (LDS) instead 
+   with "clustering" to avoid repeated detection of the same local minimum),
+   modified to optionally use a Sobol' low-discrepancy sequence (LDS) instead
    of pseudorandom numbers.  See:
 
    A. H. G. Rinnooy Kan and G. T. Timmer, "Stochastic global optimization
    methods," Mathematical Programming, vol. 39, p. 27-78 (1987).
-       [ actually 2 papers -- part I: clustering methods (p. 27), then 
+       [ actually 2 papers -- part I: clustering methods (p. 27), then
                               part II: multilevel methods (p. 57) ]
 
    and also:
@@ -323,7 +323,7 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
 	proportionality constants. */
      d.dlm = 1.0; /* min distance/R to local minima (FIXME: good value?) */
      d.dbound = 1e-6; /* min distance/R to ub/lb boundaries (good value?) */
-     
+
 
      p = alloc_pt(n);
      if (!p) { ret = NLOPT_OUT_OF_MEMORY; goto done; }
@@ -334,8 +334,8 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
      memcpy(p->x, x, n * sizeof(double));
      p->f = f(n, x, NULL, f_data);
      ++ *(stop->nevals_p);
-     if (!nlopt_rb_tree_insert(&d.pts, (rb_key) p)) { 
-	  free(p); ret = NLOPT_OUT_OF_MEMORY; 
+     if (!nlopt_rb_tree_insert(&d.pts, (rb_key) p)) {
+	  free(p); ret = NLOPT_OUT_OF_MEMORY;
      }
      if (nlopt_stop_forced(stop)) ret = NLOPT_FORCED_STOP;
      else if (nlopt_stop_evals(stop)) ret = NLOPT_MAXEVAL_REACHED;
@@ -359,7 +359,7 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
 	       }
 	       p->f = f(n, p->x, NULL, f_data);
 	       ++ *(stop->nevals_p);
-	       if (!nlopt_rb_tree_insert(&d.pts, (rb_key) p)) { 
+	       if (!nlopt_rb_tree_insert(&d.pts, (rb_key) p)) {
 		    free(p); ret = NLOPT_OUT_OF_MEMORY;
 	       }
 	       if (nlopt_stop_forced(stop)) ret = NLOPT_FORCED_STOP;
@@ -374,15 +374,15 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
 	  }
 
 	  /* distance threshold parameter R in MLSL */
-	  R = d.R_prefactor 
+	  R = d.R_prefactor
 	       * pow(log((double) d.pts.N) / d.pts.N, 1.0 / n);
 
 	  /* local search phase: do local opt. for promising points */
 	  node = nlopt_rb_tree_min(&d.pts);
-	  for (i = (int) (ceil(d.gamma * d.pts.N) + 0.5); 
+	  for (i = (int) (ceil(d.gamma * d.pts.N) + 0.5);
 	       node && i > 0 && ret == NLOPT_SUCCESS; --i) {
 	       p = (pt *) node->k;
-	       if (is_potential_minimizer(&d, p, 
+	       if (is_potential_minimizer(&d, p,
 					  R, d.dlm*R, d.dbound*R)) {
 		    nlopt_result lret;
 		    double *lm;
@@ -407,11 +407,11 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
 						  (t - stop->start));
 		    p->minimized = 1;
 		    if (lret < 0) { free(lm); ret = lret; goto done; }
-		    if (!nlopt_rb_tree_insert(&d.lms, lm)) { 
+		    if (!nlopt_rb_tree_insert(&d.lms, lm)) {
 			 free(lm); ret = NLOPT_OUT_OF_MEMORY;
 		    }
 		    else if (nlopt_stop_forced(stop)) ret = NLOPT_FORCED_STOP;
-		    else if (*lm < stop->minf_max) 
+		    else if (*lm < stop->minf_max)
 			 ret = NLOPT_MINF_MAX_REACHED;
 		    else if (nlopt_stop_evals(stop))
 			 ret = NLOPT_MAXEVAL_REACHED;
@@ -423,7 +423,7 @@ nlopt_result mlsl_minimize(int n, nlopt_func f, void *f_data,
 
 	       /* TODO: additional stopping criteria based
 		  e.g. on improvement in function values, etc? */
-	       
+
 	       node = nlopt_rb_tree_succ(node);
 	  }
      }

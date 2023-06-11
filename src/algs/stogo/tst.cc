@@ -3,7 +3,7 @@
 #include "global.h"
 #include "tools.h"
 
-#include "linalg.h" 
+#include "linalg.h"
 #include "tools.h"
 #include "stogo_config.h"
 
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
   Problem.DispMinimizers();
 
   cout << "dummyvec: " << dummyvec << "\n";
-  
+
   double val = Problem.OneMinimizer(dummyvec);
   cout << "one minimizer: " << val << ": " << dummyvec << "\n";
 }

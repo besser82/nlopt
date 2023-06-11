@@ -2,9 +2,9 @@
 %
 % Optimizes (minimizes or maximizes) a nonlinear function under
 % nonlinear constraints from the starting guess xinit, where the
-% objective, constraints, stopping criteria, and other options are 
+% objective, constraints, stopping criteria, and other options are
 % specified in the structure opt described below.  A variety of local
-% and global optimization algorithms can be used, as specified by the 
+% and global optimization algorithms can be used, as specified by the
 % opt.algorithm parameter described below.  Returns the optimum
 % function value fopt, the location xopt of the optimum, and a
 % return code retcode described below (> 0 on success).
@@ -46,7 +46,7 @@
 %
 % Several of the algorithms in NLopt (MMA, COBYLA, and ORIG_DIRECT) also
 % support arbitrary nonlinear inequality constraints, and some also allow
-% nonlinear equality constraints (ISRES and AUGLAG). For these 
+% nonlinear equality constraints (ISRES and AUGLAG). For these
 % algorithms, you can specify as many nonlinear constraints as you wish.
 % (The default is no nonlinear constraints.)
 %
@@ -82,16 +82,16 @@
 % optimization.  Names with _*N_ are derivative-free, while names
 % with _*D_ are gradient-based algorithms.  Algorithms:
 %
-% NLOPT_GD_MLSL_LDS, NLOPT_GD_MLSL, NLOPT_GD_STOGO, NLOPT_GD_STOGO_RAND, 
-% NLOPT_GN_CRS2_LM, NLOPT_GN_DIRECT_L, NLOPT_GN_DIRECT_L_NOSCAL, 
-% NLOPT_GN_DIRECT_L_RAND, NLOPT_GN_DIRECT_L_RAND_NOSCAL, NLOPT_GN_DIRECT, 
-% NLOPT_GN_DIRECT_NOSCAL, NLOPT_GN_ISRES, NLOPT_GN_MLSL_LDS, NLOPT_GN_MLSL, 
-% NLOPT_GN_ORIG_DIRECT_L, NLOPT_GN_ORIG_DIRECT, NLOPT_LD_AUGLAG_EQ, 
-% NLOPT_LD_AUGLAG, NLOPT_LD_LBFGS, NLOPT_LD_LBFGS_NOCEDAL, NLOPT_LD_MMA, 
-% NLOPT_LD_TNEWTON, NLOPT_LD_TNEWTON_PRECOND, 
-% NLOPT_LD_TNEWTON_PRECOND_RESTART, NLOPT_LD_TNEWTON_RESTART, 
-% NLOPT_LD_VAR1, NLOPT_LD_VAR2, NLOPT_LN_AUGLAG_EQ, NLOPT_LN_AUGLAG, 
-% NLOPT_LN_BOBYQA, NLOPT_LN_COBYLA, NLOPT_LN_NELDERMEAD, 
+% NLOPT_GD_MLSL_LDS, NLOPT_GD_MLSL, NLOPT_GD_STOGO, NLOPT_GD_STOGO_RAND,
+% NLOPT_GN_CRS2_LM, NLOPT_GN_DIRECT_L, NLOPT_GN_DIRECT_L_NOSCAL,
+% NLOPT_GN_DIRECT_L_RAND, NLOPT_GN_DIRECT_L_RAND_NOSCAL, NLOPT_GN_DIRECT,
+% NLOPT_GN_DIRECT_NOSCAL, NLOPT_GN_ISRES, NLOPT_GN_MLSL_LDS, NLOPT_GN_MLSL,
+% NLOPT_GN_ORIG_DIRECT_L, NLOPT_GN_ORIG_DIRECT, NLOPT_LD_AUGLAG_EQ,
+% NLOPT_LD_AUGLAG, NLOPT_LD_LBFGS, NLOPT_LD_LBFGS_NOCEDAL, NLOPT_LD_MMA,
+% NLOPT_LD_TNEWTON, NLOPT_LD_TNEWTON_PRECOND,
+% NLOPT_LD_TNEWTON_PRECOND_RESTART, NLOPT_LD_TNEWTON_RESTART,
+% NLOPT_LD_VAR1, NLOPT_LD_VAR2, NLOPT_LN_AUGLAG_EQ, NLOPT_LN_AUGLAG,
+% NLOPT_LN_BOBYQA, NLOPT_LN_COBYLA, NLOPT_LN_NELDERMEAD,
 % NLOPT_LN_NEWUOA_BOUND, NLOPT_LN_NEWUOA, NLOPT_LN_PRAXIS, NLOPT_LN_SBPLX
 %
 % For more information on individual algorithms, see their individual

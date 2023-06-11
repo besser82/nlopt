@@ -10,7 +10,7 @@ extern "C"
 #endif /* __cplusplus */
 
 typedef double (*direct_objective_func)(int n, const double *x,
-					int *undefined_flag, 
+					int *undefined_flag,
 					void *data);
 
 typedef enum {
@@ -43,9 +43,9 @@ extern direct_return_code direct_optimize(
      int dimension,
      const double *lower_bounds, const double *upper_bounds,
 
-     double *x, double *minf, 
+     double *x, double *minf,
 
-     int max_feval, int max_iter, 
+     int max_feval, int max_iter,
      double start, double maxtime,
      double magic_eps, double magic_eps_abs,
      double volume_reltol, double sigma_reltol,

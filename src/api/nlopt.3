@@ -1,6 +1,6 @@
-.\" 
+.\"
 .\" Copyright (c) 2007 Massachusetts Institute of Technology
-.\" 
+.\"
 .\" Copying and distribution of this file, with or without modification,
 .\" are permitted in any medium without royalty provided the copyright
 .\" notice and this notice are preserved.
@@ -55,7 +55,7 @@ By calling various functions in the NLopt library, one can specify
 stopping criteria (e.g., a relative tolerance on the objective
 function value is specified by
 .BR nlopt_set_ftol_rel ),
-upper and/or lower bounds on the design parameters 
+upper and/or lower bounds on the design parameters
 .IR x ,
 and even arbitrary nonlinear inequality and equality constraints.
 .sp
@@ -81,13 +81,13 @@ problem, by providing a simple unified interface to these subroutines.
 .SH OBJECTIVE FUNCTION
 The objective function is specified by calling one of:
 .sp
-.BI "  nlopt_result nlopt_set_min_objective(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_min_objective(nlopt_opt " "opt" ,
 .br
 .BI "                                       nlopt_func " "f" ,
 .br
 .BI "                                       void* " "f_data" );
 .br
-.BI "  nlopt_result nlopt_set_max_objective(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_max_objective(nlopt_opt " "opt" ,
 .br
 .BI "                                       nlopt_func " "f" ,
 .br
@@ -100,11 +100,11 @@ respectively.  The function
 .I f
 should be of the form:
 .sp
-.BI "  double f(unsigned " "n" , 
+.BI "  double f(unsigned " "n" ,
 .br
-.BI "           const double* " "x" , 
+.BI "           const double* " "x" ,
 .br
-.BI "           double* " "grad" , 
+.BI "           double* " "grad" ,
 .br
 .BI "           void* " "f_data" );
 .sp
@@ -135,16 +135,16 @@ for 0 <= i < n, if
 .I grad
 is non-NULL.
 Not all of the optimization algorithms (below) use the gradient information:
-for algorithms listed as "derivative-free," the 
+for algorithms listed as "derivative-free," the
 .I grad
 argument will always be NULL and need never be computed.  (For
 algorithms that do use gradient information, however,
 .I grad
 may still be NULL for some calls.)
 .sp
-The 
+The
 .I f_data
-argument is the same as the one passed to 
+argument is the same as the one passed to
 .B nlopt_set_min_objective
 or
 .BR nlopt_set_max_objective ,
@@ -165,13 +165,13 @@ of length
 .I n
 to one or both of the functions:
 .sp
-.BI "  nlopt_result nlopt_set_lower_bounds(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_lower_bounds(nlopt_opt " "opt" ,
 .br
-.BI "                                      const double* " "lb" ); 
+.BI "                                      const double* " "lb" );
 .br
-.BI "  nlopt_result nlopt_set_upper_bounds(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_upper_bounds(nlopt_opt " "opt" ,
 .br
-.BI "                                      const double* " "ub" ); 
+.BI "                                      const double* " "ub" );
 .sp
 If a lower/upper bound is not set, the default is no bound
 (unconstrained, i.e. a bound of infinity); it is possible to have
@@ -191,13 +191,13 @@ For convenience, the following two functions are supplied in order to
 set the lower/upper bounds for all design variables to a single
 constant (so that you don't have to fill an array with a constant value):
 .sp
-.BI "  nlopt_result nlopt_set_lower_bounds1(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_lower_bounds1(nlopt_opt " "opt" ,
 .br
-.BI "                                       double " "lb" ); 
+.BI "                                       double " "lb" );
 .br
-.BI "  nlopt_result nlopt_set_upper_bounds1(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_upper_bounds1(nlopt_opt " "opt" ,
 .br
-.BI "                                       double " "ub" ); 
+.BI "                                       double " "ub" );
 .sp
 .SH NONLINEAR CONSTRAINTS
 Several of the algorithms in NLopt (MMA and ORIG_DIRECT) also support
@@ -206,13 +206,13 @@ nonlinear equality constraints (COBYLA, SLSQP, ISRES, and AUGLAG).
 For these algorithms, you can specify as many nonlinear constraints as
 you wish by calling the following functions multiple times.
 .sp
-In particular, a nonlinear inequality constraint of the form 
+In particular, a nonlinear inequality constraint of the form
 \fIfc\fR(\fIx\fR) <= 0, where the function
 .I fc
 is of the same form as the objective function described above,
 can be specified by calling:
 .sp
-.BI "  nlopt_result nlopt_add_inequality_constraint(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_add_inequality_constraint(nlopt_opt " "opt" ,
 .br
 .BI "                                               nlopt_func " "fc" ,
 .br
@@ -220,7 +220,7 @@ can be specified by calling:
 .br
 .BI "                                               double " "tol" );
 .sp
-Just as for the objective function, 
+Just as for the objective function,
 .I fc_data
 is a pointer to arbitrary user data that will be passed through to the
 .I fc
@@ -236,13 +236,13 @@ will try not to consider any \fIx\fR to be converged unless
 is strictly non-positive; generally, at least a small positive tolerance is
 advisable to reduce sensitivity to rounding errors.
 
-A nonlinear equality constraint of the form 
+A nonlinear equality constraint of the form
 \fIh\fR(\fIx\fR) = 0, where the function
 .I h
 is of the same form as the objective function described above,
 can be specified by calling:
 .sp
-.BI "  nlopt_result nlopt_add_equality_constraint(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_add_equality_constraint(nlopt_opt " "opt" ,
 .br
 .BI "                                             nlopt_func " "h" ,
 .br
@@ -250,7 +250,7 @@ can be specified by calling:
 .br
 .BI "                                             double " "tol" );
 .sp
-Just as for the objective function, 
+Just as for the objective function,
 .I h_data
 is a pointer to arbitrary user data that will be passed through to the
 .I h
@@ -261,7 +261,7 @@ a point
 .I x
 is considered feasible for judging whether to stop the optimization if
 |\fIh\fR(\fIx\fR)| <= \fItol\fR.  For equality constraints, a small
-positive tolerance is strongly advised in order to allow NLopt to 
+positive tolerance is strongly advised in order to allow NLopt to
 converge even if the equality constraint is slightly nonzero.
 .sp
 (For any algorithm listed as "derivative-free" below, the
@@ -269,14 +269,14 @@ converge even if the equality constraint is slightly nonzero.
 argument to \fIfc\fR or \fIh\fR will always be NULL and need never be
 computed.)
 .sp
-To remove all of the inequality and/or equality constraints from 
+To remove all of the inequality and/or equality constraints from
 a given problem \fIopt\fR, you can call the following functions:
 .sp
 .BI "  nlopt_result nlopt_remove_inequality_constraints(nlopt_opt " "opt" );
 .br
 .BI "  nlopt_result nlopt_remove_equality_constraints(nlopt_opt " "opt" );
 .SH ALGORITHMS
-The 
+The
 .I algorithm
 parameter specifies the optimization algorithm (for more detail on
 these, see the README files in the source-code subdirectories), and
@@ -298,8 +298,8 @@ objective function to supply a gradient, whereas
 refers to derivative-based algorithms that require the objective
 function to supply a gradient.  (Especially for local optimization,
 derivative-based algorithms are generally superior to derivative-free
-ones: the gradient is good to have 
-.I if 
+ones: the gradient is good to have
+.I if
 you can compute it cheaply, e.g. via an adjoint method.)
 .sp
 The algorithm specified for a given problem
@@ -309,7 +309,7 @@ is returned by the function:
 .BI "  nlopt_algorithm nlopt_get_algorithm(nlopt_opt " "opt" );
 .sp
 The available algorithms are:
-.TP 
+.TP
 .B NLOPT_GN_DIRECT_L
 Perform a global (G) derivative-free (N) optimization using the
 DIRECT-L search algorithm by Jones et al. as modified by Gablonsky et
@@ -328,19 +328,19 @@ and
 which are versions of DIRECT where the dimensions are not rescaled to
 a unit hypercube (which means that dimensions with larger bounds are
 given more weight).
-.TP 
+.TP
 .B NLOPT_GN_ORIG_DIRECT_L
 A global (G) derivative-free optimization using the DIRECT-L algorithm
 as above, along with
 .B NLOPT_GN_ORIG_DIRECT
-which is the original DIRECT algorithm.  Unlike 
-.B NLOPT_GN_DIRECT_L 
+which is the original DIRECT algorithm.  Unlike
+.B NLOPT_GN_DIRECT_L
 above, these two algorithms refer to code based on the original
 Fortran code of Gablonsky et al., which has some hard-coded
 limitations on the number of subdivisions etc. and does not support
 all of the NLopt stopping criteria, but on the other hand it supports
 arbitrary nonlinear inequality constraints.
-.TP 
+.TP
 .B NLOPT_GD_STOGO
 Global (G) optimization using the StoGO algorithm by Madsen et al.  StoGO
 exploits gradient information (D) (which must be supplied by the
@@ -352,7 +352,7 @@ which is a randomized version of the StoGO search scheme.  The StoGO
 algorithms are only available if NLopt is compiled with C++ code
 enabled, and should be linked via \-lnlopt_cxx instead of \-lnlopt (via
 a C++ compiler, in order to link the C++ standard libraries).
-.TP 
+.TP
 .B NLOPT_LN_NELDERMEAD
 Perform a local (L) derivative-free (N) optimization, starting at
 .IR x ,
@@ -364,7 +364,7 @@ works fairly well for some cases that are hard to handle otherwise,
 e.g. noisy/discontinuous objectives.  See also
 .B NLOPT_LN_SBPLX
 below.
-.TP 
+.TP
 .B NLOPT_LN_SBPLX
 Perform a local (L) derivative-free (N) optimization, starting at
 .IR x ,
@@ -392,9 +392,9 @@ Luksan et al.
 .B NLOPT_LD_VAR2
 Local (L) gradient-based (D) optimization using a shifted limited-memory
 variable-metric method based on code by Luksan et al., supporting both
-unconstrained and bound-constrained optimization.  
+unconstrained and bound-constrained optimization.
 .B NLOPT_LD_VAR2
-uses a rank-2 method, while 
+uses a rank-2 method, while
 .B .B NLOPT_LD_VAR1
 is another variant using a rank-1 method.
 .TP
@@ -404,8 +404,8 @@ LBFGS-preconditioned truncated Newton method with steepest-descent
 restarting, based on code by Luksan et al., supporting both
 unconstrained and bound-constrained optimization.  There are several
 other variants of this algorithm:
-.B NLOPT_LD_TNEWTON_PRECOND 
-(same without restarting), 
+.B NLOPT_LD_TNEWTON_PRECOND
+(same without restarting),
 .B NLOPT_LD_TNEWTON_RESTART
 (same without preconditioning), and
 .B NLOPT_LD_TNEWTON
@@ -422,7 +422,7 @@ Global (G) derivative-free (N) optimization using a genetic algorithm
 handle nonlinear inequality and equality constraints as suggested by
 Runarsson and Yao.
 .TP
-\fBNLOPT_G_MLSL_LDS\fR, \fBNLOPT_G_MLSL\fR 
+\fBNLOPT_G_MLSL_LDS\fR, \fBNLOPT_G_MLSL\fR
 Global (G) optimization using the multi-level single-linkage (MLSL)
 algorithm with a low-discrepancy sequence (LDS) or pseudorandom
 numbers, respectively.  This algorithm executes a low-discrepancy
@@ -434,7 +434,7 @@ criteria/tolerances for the local searches, by
 with or without derivatives, and determines whether the objective
 function needs gradients.)
 .TP
-\fBNLOPT_LD_MMA\fR, \fBNLOPT_LD_CCSAQ\fR 
+\fBNLOPT_LD_MMA\fR, \fBNLOPT_LD_CCSAQ\fR
 Local (L) gradient-based (D) optimization using the method of moving
 asymptotes (MMA), or rather a refined version of the algorithm as
 published by Svanberg (2002).  (NLopt uses an independent
@@ -475,7 +475,7 @@ is also available, as
 .BR NLOPT_LN_NEWUOA ,
 but this algorithm ignores the bound constraints
 .I lb
-and 
+and
 .IR ub ,
 and so it should only be used for unconstrained problems.  Mostly
 superseded by BOBYQA.
@@ -589,7 +589,7 @@ Stop when the number of function evaluations exceeds
 .IR maxeval .
 (This is not a strict maximum: the number of function evaluations may
 exceed
-.I maxeval 
+.I maxeval
 slightly, depending upon the algorithm.)  Criterion is disabled
 if \fImaxeval\fR is non-positive.
 .TP
@@ -667,7 +667,7 @@ optimization algorithm as a subroutine, typically for local
 optimization.  You can change the local search algorithm and its
 tolerances by calling:
 .sp
-.BI "  nlopt_result nlopt_set_local_optimizer(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_local_optimizer(nlopt_opt " "opt" ,
 .br
 .BI "                                         const nlopt_opt " "local_opt" );
 .sp
@@ -691,7 +691,7 @@ choice.
 .sp
 You can modify the initial step size by calling:
 .sp
-.BI "  nlopt_result nlopt_set_initial_step(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_initial_step(nlopt_opt " "opt" ,
 .br
 .BI "                                      const double* " "dx" );
 .sp
@@ -700,7 +700,7 @@ initial step size for each component of the design parameters \fIx\fR.
 For convenience, if you want to set the step sizes in every direction
 to be the same value, you can instead call:
 .sp
-.BI "  nlopt_result nlopt_set_initial_step1(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_initial_step1(nlopt_opt " "opt" ,
 .br
 .BI "                                       double " "dx" );
 .SH STOCHASTIC POPULATION
@@ -710,7 +710,7 @@ ISRES) start by generating some initial "population" of random points
 heuristically in some algorithm-specific way, but the initial
 population can by changed by calling:
 .sp
-.BI "  nlopt_result nlopt_set_population(nlopt_opt " "opt" , 
+.BI "  nlopt_result nlopt_set_population(nlopt_opt " "opt" ,
 .br
 .BI "                                    unsigned " "pop" );
 .sp

@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include <math.h>
@@ -64,16 +64,16 @@ typedef struct {
      int which_opt; /* which rects are considered "potentially optimal"
 		       0: Jones (all pts on cvx hull, even equal pts)
 		       1: Gablonsky DIRECT-L (pick one pt, if equal pts)
-		       2: ~ 1, but pick points randomly if equal pts 
+		       2: ~ 1, but pick points randomly if equal pts
 		    ... 2 seems to suck compared to just picking oldest pt */
-  
+
      const double *lb, *ub;
      nlopt_stopping *stop; /* stopping criteria */
      nlopt_func f; void *f_data;
      double *work; /* workspace, of length >= 2*n */
      int *iwork; /* workspace, length >= n */
      double minf, *xmin; /* minimum so far */
-     
+
      /* red-black tree of hyperrects, sorted by (d,f,age) in
 	lexographical order */
      rb_tree rtree;
@@ -84,7 +84,7 @@ typedef struct {
 
 /***************************************************************************/
 
-/* Evaluate the "diameter" (d) of a rectangle of widths w[n] 
+/* Evaluate the "diameter" (d) of a rectangle of widths w[n]
 
    We round the result to single precision, which should be plenty for
    the use we put the diameter to (rect sorting), to allow our
@@ -99,7 +99,7 @@ static double rect_diameter(int n, const double *w, const params *p)
 	  for (i = 0; i < n; ++i)
 	       sum += w[i] * w[i];
 	  /* distance from center to a vertex */
-	  return ((float) (sqrt(sum) * 0.5)); 
+	  return ((float) (sqrt(sum) * 0.5));
      }
      else { /* Gablonsky measure */
 	  double maxw = 0;
@@ -209,7 +209,7 @@ static nlopt_result divide_rect(double *rdiv, params *p)
      }
      else {
 	  int k;
-	  if (nlongest > 1 && p->which_div == 2) { 
+	  if (nlongest > 1 && p->which_div == 2) {
                /* randomly choose longest side */
 	       i = nlopt_iurand(nlongest);
 	       for (k = 0; k < n; ++k)
@@ -317,7 +317,7 @@ static int convex_hull(rb_tree *t, double **hull, int allow_dups)
      }
 #endif
 
-     for (; n != nmax; n = nlopt_rb_tree_succ(n)) { 
+     for (; n != nmax; n = nlopt_rb_tree_succ(n)) {
 	  double *k = n->k;
 	  if (k[1] > yminmin + (k[0] - xmin) * minslope)
 	       continue;
@@ -543,7 +543,7 @@ nlopt_result cdirect_unscaled(int n, nlopt_func f, void *f_data,
      free(p.hull);
      free(p.iwork);
      free(p.work);
-	      
+
      *minf = p.minf;
      return ret;
 }
@@ -581,7 +581,7 @@ nlopt_result cdirect(int n, nlopt_func f, void *f_data,
      d.f = f; d.f_data = f_data; d.lb = lb; d.ub = ub;
      d.x = (double *) malloc(sizeof(double) * n * (stop->xtol_abs ? 4 : 3));
      if (!d.x) return NLOPT_OUT_OF_MEMORY;
-     
+
      for (i = 0; i < n; ++i) {
 	  x[i] = (x[i] - lb[i]) / (ub[i] - lb[i]);
 	  d.x[n+i] = 0;

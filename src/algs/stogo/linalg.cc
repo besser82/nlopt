@@ -9,7 +9,7 @@
 #include "linalg.h"
 
 double eps() {
-  /* Returns the machine precision : (min { x >= 0 : 1 + x > 1 }) 
+  /* Returns the machine precision : (min { x >= 0 : 1 + x > 1 })
      NB This routine should be replaced by LAPACK_LAMCH */
   double Current, Last, OnePlusCurrent ;
   Current = 1.0 ;
@@ -168,7 +168,7 @@ RMatrix::RMatrix(int dim) {
 }
 
 RMatrix::RMatrix(RCRMatrix matr) {
- // Constructor + Copy 
+ // Constructor + Copy
  Dim=matr.Dim;
  Vals=new double[long(Dim)*long(Dim)]; (*this)=matr;
 }

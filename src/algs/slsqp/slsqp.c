@@ -44,11 +44,11 @@
 /********************************* BLAS1 routines *************************/
 
 /*     COPIES A VECTOR, X, TO A VECTOR, Y, with the given increments */
-static void dcopy___(int *n_, const double *dx, int incx, 
+static void dcopy___(int *n_, const double *dx, int incx,
 		     double *dy, int incy)
 {
      int i, n = *n_;
-     
+
      if (n <= 0) return;
      if (incx == 1 && incy == 1)
 	  memcpy(dy, dx, sizeof(double) * ((unsigned) n));
@@ -62,10 +62,10 @@ static void dcopy___(int *n_, const double *dx, int incx,
 } /* dcopy___ */
 
 /* CONSTANT TIMES A VECTOR PLUS A VECTOR. */
-static void daxpy_sl__(int *n_, const double *da_, const double *dx, 
+static void daxpy_sl__(int *n_, const double *da_, const double *dx,
 		       int incx, double *dy, int incy)
 {
-     int n = *n_, i;  
+     int n = *n_, i;
      double da = *da_;
 
      if (n <= 0 || da == 0) return;
@@ -102,7 +102,7 @@ static double dnrm2___(int *n_, double *dx, int incx)
 }
 
 /* apply Givens rotation */
-static void dsrot_(int n, double *dx, int incx, 
+static void dsrot_(int n, double *dx, int incx,
 		   double *dy, int incy, double *c__, double *s_)
 {
      int i;
@@ -133,14 +133,14 @@ static void dsrotg_(double *da, double *db, double *c, double *s)
      if (scale != 0) {
 	  double r, iscale = 1 / scale;
 	  double tmpa = (*da) * iscale, tmpb = (*db) * iscale;
-	  r = (roe < 0 ? -scale : scale) * sqrt((tmpa * tmpa) + (tmpb * tmpb)); 
-	  *c = *da / r; *s = *db / r; 
+	  r = (roe < 0 ? -scale : scale) * sqrt((tmpa * tmpa) + (tmpb * tmpb));
+	  *c = *da / r; *s = *db / r;
 	  *da = r;
 	  if (*c != 0 && fabs(*c) <= *s) *db = 1 / *c;
 	  else *db = *s;
      }
-     else { 
-	  *c = 1; 
+     else {
+	  *c = 1;
 	  *s = *da = *db = 0;
      }
 }
@@ -162,8 +162,8 @@ static const int c__2 = 2;
 #define MIN2(a,b) ((a) <= (b) ? (a) : (b))
 #define MAX2(a,b) ((a) >= (b) ? (a) : (b))
 
-static void h12_(const int *mode, int *lpivot, int *l1, 
-		 int *m, double *u, const int *iue, double *up, 
+static void h12_(const int *mode, int *lpivot, int *l1,
+		 int *m, double *u, const int *iue, double *up,
 		 double *c__, const int *ice, const int *icv, const int *ncv)
 {
     /* Initialized data */
@@ -295,7 +295,7 @@ L80:
 } /* h12_ */
 
 static void nnls_(double *a, int *mda, int *m, int *
-	n, double *b, double *x, double *rnorm, double *w, 
+	n, double *b, double *x, double *rnorm, double *w,
 	double *z__, int *indx, int *mode)
 {
     /* Initialized data */
@@ -453,7 +453,7 @@ L160:
     for (jz = iz1; jz <= i__2; ++jz) {
 	jj = indx[jz];
 /* L170: */
-	h12_(&c__2, &nsetp, &npp1, m, &a[j * a_dim1 + 1], &c__1, &up, &a[jj * 
+	h12_(&c__2, &nsetp, &npp1, m, &a[j * a_dim1 + 1], &c__1, &up, &a[jj *
 		a_dim1 + 1], &c__1, mda, &c__1);
     }
     k = MIN2(npp1,*mda);
@@ -558,8 +558,8 @@ L290:
     return;
 } /* nnls_ */
 
-static void ldp_(double *g, int *mg, int *m, int *n, 
-	double *h__, double *x, double *xnorm, double *w, 
+static void ldp_(double *g, int *mg, int *m, int *n,
+	double *h__, double *x, double *xnorm, double *w,
 	int *indx, int *mode)
 {
     /* Initialized data */
@@ -684,8 +684,8 @@ L50:
     return;
 } /* ldp_ */
 
-static void lsi_(double *e, double *f, double *g, 
-	double *h__, int *le, int *me, int *lg, int *mg, 
+static void lsi_(double *e, double *f, double *g,
+	double *h__, int *le, int *me, int *lg, int *mg,
 	int *n, double *x, double *xnorm, double *w, int *
 	jw, int *mode)
 {
@@ -754,7 +754,7 @@ static void lsi_(double *e, double *f, double *g,
 	j = MIN2(i__2,*n);
 	i__2 = i__ + 1;
 	i__3 = *n - i__;
-	h12_(&c__1, &i__, &i__2, me, &e[i__ * e_dim1 + 1], &c__1, &t, &e[j * 
+	h12_(&c__1, &i__, &i__2, me, &e[i__ * e_dim1 + 1], &c__1, &t, &e[j *
 		e_dim1 + 1], &c__1, le, &i__3);
 /* L10: */
 	i__2 = i__ + 1;
@@ -807,7 +807,7 @@ L50:
 } /* lsi_ */
 
 static void hfti_(double *a, int *mda, int *m, int *
-	n, double *b, int *mdb, const int *nb, double *tau, int 
+	n, double *b, int *mdb, const int *nb, double *tau, int
 	*krank, double *rnorm, double *h__, double *g, int *
 	ip)
 {
@@ -992,7 +992,7 @@ L180:
 /* L210: */
 	    i__1 = k - i__;
 	    b[i__ + jb * b_dim1] = (b[i__ + jb * b_dim1] - ddot_sl__(&i__1, &
-		    a[i__ + j * a_dim1], *mda, &b[j + jb * b_dim1], 1)) / 
+		    a[i__ + j * a_dim1], *mda, &b[j + jb * b_dim1], 1)) /
 		    a[i__ + i__ * a_dim1];
 	}
 /*   COMPLETE SOLUTION VECTOR */
@@ -1028,9 +1028,9 @@ L270:
     *krank = k;
 } /* hfti_ */
 
-static void lsei_(double *c__, double *d__, double *e, 
+static void lsei_(double *c__, double *d__, double *e,
 	double *f, double *g, double *h__, int *lc, int *
-	mc, int *le, int *me, int *lg, int *mg, int *n, 
+	mc, int *le, int *me, int *lg, int *mg, int *n,
 	double *x, double *xnrm, double *w, int *jw, int *
 	mode)
 {
@@ -1039,7 +1039,7 @@ static void lsei_(double *c__, double *d__, double *e,
     const double epmach = 2.22e-16;
 
     /* System generated locals */
-    int c_dim1, c_offset, e_dim1, e_offset, g_dim1, g_offset, i__1, i__2, 
+    int c_dim1, c_offset, e_dim1, e_offset, g_dim1, g_offset, i__1, i__2,
 	    i__3;
     double d__1;
 
@@ -1139,7 +1139,7 @@ static void lsei_(double *c__, double *d__, double *e,
 	    goto L75;
 	}
 	i__1 = i__ - 1;
-	x[i__] = (d__[i__] - ddot_sl__(&i__1, &c__[i__ + c_dim1], *lc, &x[1], 1)) 
+	x[i__] = (d__[i__] - ddot_sl__(&i__1, &c__[i__ + c_dim1], *lc, &x[1], 1))
 	     / c__[i__ + i__ * c_dim1];
 /* L15: */
     }
@@ -1208,7 +1208,7 @@ L50:
     i__2 = *mc;
     for (i__ = 1; i__ <= i__2; ++i__) {
 /* L60: */
-	d__[i__] = ddot_sl__(me, &e[i__ * e_dim1 + 1], 1, &f[1], 1) - 
+	d__[i__] = ddot_sl__(me, &e[i__ * e_dim1 + 1], 1, &f[1], 1) -
 		ddot_sl__(mg, &g[i__ * g_dim1 + 1], 1, &w[mc1], 1);
     }
     for (i__ = *mc; i__ >= 1; --i__) {
@@ -1231,9 +1231,9 @@ L75:
     return;
 } /* lsei_ */
 
-static void lsq_(int *m, int *meq, int *n, int *nl, 
+static void lsq_(int *m, int *meq, int *n, int *nl,
 	int *la, double *l, double *g, double *a, double *
-	b, const double *xl, const double *xu, double *x, double *y, 
+	b, const double *xl, const double *xu, double *x, double *y,
 	double *w, int *jw, int *mode)
 {
     /* Initialized data */
@@ -1414,7 +1414,7 @@ static void lsq_(int *m, int *meq, int *n, int *nl,
 		 d__1 = -one; dscal_sl__(n, &d__1, &w[iu], 1); */
     iw = iu + *n;
     i__1 = MAX2(1,*meq);
-    lsei_(&w[ic], &w[id], &w[ie], &w[if__], &w[ig], &w[ih], &i__1, meq, n, n, 
+    lsei_(&w[ic], &w[id], &w[ie], &w[if__], &w[ig], &w[ih], &i__1, meq, n, n,
 	    &m1, &m1, n, &x[1], &xnorm, &w[iw], &jw[1], mode);
     if (*mode == 1) {
 /*   restore Lagrange multipliers */
@@ -1434,7 +1434,7 @@ static void lsq_(int *m, int *meq, int *n, int *nl,
 /*   END OF SUBROUTINE LSQ */
 } /* lsq_ */
 
-static void ldl_(int *n, double *a, double *z__, 
+static void ldl_(int *n, double *a, double *z__,
 	double *sigma, double *w)
 {
     /* Initialized data */
@@ -1594,7 +1594,7 @@ static double linmin_(int *mode, const double *ax, const double *bx, double *
     double ret_val, d__1;
 
     /* Local variables */
-    double a, b, d__, e, m, p, q, r__, u, v, w, x, fu, fv, fw, fx, tol1, 
+    double a, b, d__, e, m, p, q, r__, u, v, w, x, fu, fv, fw, fx, tol1,
 	    tol2;
 
 /*   LINMIN  LINESEARCH WITHOUT DERIVATIVES */
@@ -1801,11 +1801,11 @@ typedef struct {
      RS(incons); RS(ireset); RS(itermx)
 
 static void slsqpb_(int *m, int *meq, int *la, int *
-		    n, double *x, const double *xl, const double *xu, double *f, 
-		    double *c__, double *g, double *a, double *acc, 
-		    int *iter, int *mode, double *r__, double *l, 
-		    double *x0, double *mu, double *s, double *u, 
-		    double *v, double *w, int *iw, 
+		    n, double *x, const double *xl, const double *xu, double *f,
+		    double *c__, double *g, double *a, double *acc,
+		    int *iter, int *mode, double *r__, double *l,
+		    double *x0, double *mu, double *s, double *u,
+		    double *v, double *w, int *iw,
 		    slsqpb_state *state)
 {
     /* Initialized data */
@@ -2029,7 +2029,7 @@ L190:
     dscal_sl__(n, &alpha, &s[1], 1);
     dcopy___(n, &x0[1], 1, &x[1], 1);
     daxpy_sl__(n, &one, &s[1], 1, &x[1], 1);
-    
+
     /* SGJ 2010: ensure roundoff doesn't push us past bound constraints */
     i__1 = *n; for (i__ = 1; i__ <= i__1; ++i__) {
 	 if (x[i__] < xl[i__]) x[i__] = xl[i__];
@@ -2038,7 +2038,7 @@ L190:
 
     /* SGJ 2010: optimizing for the common case where the inexact line
        search succeeds in one step, use special mode = -2 here to
-       eliminate a a subsequent unnecessary mode = -1 call, at the 
+       eliminate a a subsequent unnecessary mode = -1 call, at the
        expense of extra gradient evaluations when more than one inexact
        line-search step is required */
     *mode = line == 1 ? -2 : 1;
@@ -2192,8 +2192,8 @@ L330:
 /*                              optimizer                               * */
 /* *********************************************************************** */
 static void slsqp(int *m, int *meq, int *la, int *n,
-		  double *x, const double *xl, const double *xu, double *f, 
-		  double *c__, double *g, double *a, double *acc, 
+		  double *x, const double *xl, const double *xu, double *f,
+		  double *c__, double *g, double *a, double *acc,
 		  int *iter, int *mode, double *w, int *l_w__, int *
 		  jw, int *l_jw__, slsqpb_state *state)
 {
@@ -2396,8 +2396,8 @@ static void slsqp(int *m, int *meq, int *la, int *n,
     /* Function Body */
     n1 = *n + 1;
     mineq = *m - *meq + n1 + n1;
-    il = (n1 * 3 + *m) * (n1 + 1) + (n1 - *meq + 1) * (mineq + 2) + (mineq << 
-	    1) + (n1 + mineq) * (n1 - *meq) + (*meq << 1) + n1 * *n / 2 + (*m 
+    il = (n1 * 3 + *m) * (n1 + 1) + (n1 - *meq + 1) * (mineq + 2) + (mineq <<
+	    1) + (n1 + mineq) * (n1 - *meq) + (*meq << 1) + n1 * *n / 2 + (*m
 	    << 1) + *n * 3 + (n1 << 2) + 1;
 /* Computing MAX */
     i__1 = mineq, i__2 = n1 - *meq;
@@ -2428,7 +2428,7 @@ static void slsqp(int *m, int *meq, int *la, int *n,
 static void length_work(int *LEN_W, int *LEN_JW, int M, int MEQ, int N)
 {
      int N1 = N+1, MINEQ = M-MEQ+N1+N1;
-     *LEN_W = (3*N1+M)*(N1+1) 
+     *LEN_W = (3*N1+M)*(N1+1)
 	  +(N1-MEQ+1)*(MINEQ+2) + 2*MINEQ
           +(N1+MINEQ)*(N1-MEQ) + 2*MEQ + N1
           +(N+1)*N/2 + 2*M + 3*N + 3*N1 + 1;
@@ -2445,7 +2445,7 @@ nlopt_result nlopt_slsqp(unsigned n, nlopt_func f, void *f_data,
      slsqpb_state state = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,NULL};
      unsigned mtot = nlopt_count_constraints(m, fc);
      unsigned ptot = nlopt_count_constraints(p, h);
-     double *work, *cgrad, *c, *grad, *w, 
+     double *work, *cgrad, *c, *grad, *w,
 	  fcur, *xcur, fprev, *xprev, *cgradtmp;
      int mpi = (int) (mtot + ptot), pi = (int) ptot,  ni = (int) n, mpi1 = mpi > 0 ? mpi : 1;
      int len_w, len_jw, *jw;
@@ -2458,14 +2458,14 @@ nlopt_result nlopt_slsqp(unsigned n, nlopt_func f, void *f_data,
      double infeasibility = HUGE_VAL, infeasibility_cur = HUGE_VAL;
      unsigned max_cdim;
      int want_grad = 1;
-     
+
      max_cdim = MAX2(nlopt_max_constraint_dim(m, fc),
 		    nlopt_max_constraint_dim(p, h));
      length_work(&len_w, &len_jw, mpi, pi, ni);
 
 #define U(n) ((unsigned) (n))
-     work = (double *) malloc(sizeof(double) * (U(mpi1) * (n + 1) 
-						+ U(mpi) 
+     work = (double *) malloc(sizeof(double) * (U(mpi1) * (n + 1)
+						+ U(mpi)
 						+ n+1 + n + n + max_cdim*n
 						+ U(len_w))
 			      + sizeof(int) * U(len_jw));
@@ -2478,7 +2478,7 @@ nlopt_result nlopt_slsqp(unsigned n, nlopt_func f, void *f_data,
      cgradtmp = xprev + n;
      w = cgradtmp + max_cdim*n;
      jw = (int *) (w + len_w);
-     
+
      memcpy(xcur, x, sizeof(double) * n);
      memcpy(xprev, x, sizeof(double) * n);
      fprev = fcur = *minf = HUGE_VAL;

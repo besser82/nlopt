@@ -12,7 +12,7 @@ if (Matlab_FOUND AND Matlab_MX_LIBRARY)
       set_target_properties(nlopt_optimize-mex PROPERTIES COMPILE_FLAGS "-fvisibility=default")
     endif()
   endif()
-  
+
   if (NLOPT_CXX)
     set_target_properties (nlopt_optimize-mex PROPERTIES LINKER_LANGUAGE CXX)
   endif ()

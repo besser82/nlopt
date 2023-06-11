@@ -280,7 +280,7 @@ DEFUN_DLD(nlopt_optimize, args, nargout, NLOPT_OPTIMIZE_USAGE)
   }
 
   Cell fc, h;
-  
+
   if (opts.contains("fc") && opts.contents("fc").numel() == 1) {
     CHECK((opts.contents("fc"))(0).iscell(), "opt.fc must be cell array");
     fc = (opts.contents("fc"))(0).cell_value();

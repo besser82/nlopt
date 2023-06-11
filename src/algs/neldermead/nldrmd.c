@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include <math.h>
@@ -60,7 +60,7 @@ static int close(double a, double b)
    with this is that the simplex might collapse into a
    lower-dimensional hyperplane; this danger can be ameliorated by
    restarting (as in subplex), however. */
-static int reflectpt(int n, double *xnew, 
+static int reflectpt(int n, double *xnew,
 		     const double *c, double scale, const double *xold,
 		     const double *lb, const double *ub)
 {
@@ -94,12 +94,12 @@ static int reflectpt(int n, double *xnew,
    re-evaluate f at the starting x).
 
    if psi > 0, then it *replaces* xtol and ftol in stop with the condition
-   that the simplex diameter |xl - xh| must be reduced by a factor of psi 
+   that the simplex diameter |xl - xh| must be reduced by a factor of psi
    ... this is for when nldrmd is used within the subplex method; for
-   ordinary termination tests, set psi = 0. 
+   ordinary termination tests, set psi = 0.
 
    scratch should contain an array of length >= (n+1)*(n+1) + 2*n,
-   used as scratch workspace. 
+   used as scratch workspace.
 
    On output, *fdiff will contain the difference between the high
    and low function values of the last simplex. */
@@ -153,11 +153,11 @@ nlopt_result nldrmd_minimize_(int n, nlopt_func f, void *f_data,
 					   ub[i] : lb[i]) + x[i]);
 	       }
 	  }
-	  if (close(pt[1+i], x[i])) { 
+	  if (close(pt[1+i], x[i])) {
               nlopt_stop_msg(stop, "starting step size led to simplex that was too small in dimension %d: %g is too close to x[%d]=%g",
                              i, pt[1+i], i, x[i]);
               ret=NLOPT_FAILURE;
-              goto done; 
+              goto done;
           }
 	  pt[0] = f(n, pt+1, NULL, f_data);
 	  CHECK_EVAL(pt+1, pt[0]);
@@ -225,15 +225,15 @@ nlopt_result nldrmd_minimize_(int n, nlopt_func f, void *f_data,
 	  }
 
 	  /* reflection */
-	  if (!reflectpt(n, xcur, c, alpha, xh, lb, ub)) { 
-	       ret=NLOPT_XTOL_REACHED; goto done; 
+	  if (!reflectpt(n, xcur, c, alpha, xh, lb, ub)) {
+	       ret=NLOPT_XTOL_REACHED; goto done;
 	  }
 	  fr = f(n, xcur, NULL, f_data);
 	  CHECK_EVAL(xcur, fr);
 
 	  if (fr < fl) { /* new best point, expand simplex */
 	       if (!reflectpt(n, xh, c, gamm, xh, lb, ub)) {
-		    ret=NLOPT_XTOL_REACHED; goto done; 
+		    ret=NLOPT_XTOL_REACHED; goto done;
 	       }
 	       fh = f(n, xh, NULL, f_data);
 	       CHECK_EVAL(xh, fh);
@@ -249,7 +249,7 @@ nlopt_result nldrmd_minimize_(int n, nlopt_func f, void *f_data,
 	  else { /* new worst point, contract */
 	       double fc;
 	       if (!reflectpt(n,xcur,c, fh <= fr ? -beta : beta, xh, lb,ub)) {
-		    ret=NLOPT_XTOL_REACHED; goto done; 
+		    ret=NLOPT_XTOL_REACHED; goto done;
 	       }
 	       fc = f(n, xcur, NULL, f_data);
 	       CHECK_EVAL(xcur, fc);
@@ -278,7 +278,7 @@ nlopt_result nldrmd_minimize_(int n, nlopt_func f, void *f_data,
 	  high->k[0] = fh;
 	  nlopt_rb_tree_resort(&t, high);
      }
-     
+
 done:
      nlopt_rb_tree_destroy(&t);
      return ret;

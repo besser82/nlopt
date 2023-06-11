@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include <stdlib.h>
@@ -56,7 +56,7 @@ static int crs_compare(double *k1, double *k2)
 }
 
 /* set x to a random trial value, as defined by CRS:
-     x = 2G - x_n, 
+     x = 2G - x_n,
    where x_0 ... x_n are distinct points in the population
    with x_0 the current best point and the other points are random,
    and G is the centroid of x_0...x_{n-1} */
@@ -77,12 +77,12 @@ static void random_trial(crs_data *d, double *x, rb_node *best)
 			      be very random */
 
      /* use "method A" from
-	
+
            Jeffrey Scott Vitter, "An efficient algorithm for
 	   sequential random sampling," ACM Trans. Math. Soft. 13 (1),
-	   58--67 (1987).  
+	   58--67 (1987).
 
-        to randomly pick n distinct points out of the remaining N-1 (not 
+        to randomly pick n distinct points out of the remaining N-1 (not
         including i0!).  (The same as "method S" in Knuth vol. 2.)
         This method requires O(N) time, which is fine in our case
         (there are better methods if n << N). */
@@ -170,7 +170,7 @@ static nlopt_result crs_init(crs_data *d, int n, const double *x,
      int i;
 
      if (!population) {
-	  /* TODO: how should we set the default population size? 
+	  /* TODO: how should we set the default population size?
 	     the Kaelo and Ali paper suggests 10*(n+1), but should
 	     we add more random points if maxeval is large, or... ? */
 	  d->N = 10 * (n + 1); /* heuristic initial population size */
@@ -210,11 +210,11 @@ static nlopt_result crs_init(crs_data *d, int n, const double *x,
      if (nlopt_stop_time(stop)) return NLOPT_MAXTIME_REACHED;
      for (i = 1; i < d->N; ++i) {
 	  double *k = d->ps + i*(n+1);
-	  if (d->s) 
+	  if (d->s)
 	       nlopt_sobol_next(d->s, k + 1, lb, ub);
 	  else {
 	       int j;
-	       for (j = 0; j < n; ++j) 
+	       for (j = 0; j < n; ++j)
 		    k[1 + j] = nlopt_urand(lb[j], ub[j]);
 	  }
 	  k[0] = f(n, k + 1, NULL, f_data);
@@ -222,7 +222,7 @@ static nlopt_result crs_init(crs_data *d, int n, const double *x,
 	  if (!nlopt_rb_tree_insert(&d->t, k)) return NLOPT_OUT_OF_MEMORY;
 	  if (k[0] < stop->minf_max) return NLOPT_MINF_MAX_REACHED;
 	  if (nlopt_stop_evals(stop)) return NLOPT_MAXEVAL_REACHED;
-	  if (nlopt_stop_time(stop)) return NLOPT_MAXTIME_REACHED;	  
+	  if (nlopt_stop_time(stop)) return NLOPT_MAXTIME_REACHED;
      }
 
      return NLOPT_SUCCESS;;
@@ -242,7 +242,7 @@ nlopt_result crs_minimize(int n, nlopt_func f, void *f_data,
 
      ret = crs_init(&d, n, x, lb, ub, stop, f, f_data, population, lds);
      if (ret < 0) return ret;
-     
+
      best = nlopt_rb_tree_min(&d.t);
      *minf = best->k[0];
      memcpy(x, best->k + 1, sizeof(double) * n);
@@ -261,9 +261,9 @@ nlopt_result crs_minimize(int n, nlopt_func f, void *f_data,
 		    memcpy(x, best->k + 1, sizeof(double) * n);
 	       }
 	       if (ret != NLOPT_SUCCESS) {
-		    if (nlopt_stop_evals(stop)) 
+		    if (nlopt_stop_evals(stop))
 			 ret = NLOPT_MAXEVAL_REACHED;
-		    else if (nlopt_stop_time(stop)) 
+		    else if (nlopt_stop_time(stop))
 			 ret = NLOPT_MAXTIME_REACHED;
 	       }
 	  }

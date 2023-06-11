@@ -70,7 +70,7 @@ class RMatrix
    RMatrix() ;
    RMatrix(int); // dimension
   ~RMatrix() { delete[] Vals;  Vals=0 ; Dim=0; }
- 
+
   RMatrix(RCRMatrix); // copy constructor
   RCRMatrix operator=(double num) ;
   RCRMatrix operator=(RCRMatrix) ; // (needed for template stuff)

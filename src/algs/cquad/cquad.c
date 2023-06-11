@@ -77,7 +77,7 @@ static void eval_model_grad(const quad_model *model, const double *x,
 
 /* LAPACK routine to solve a real-symmetric indefinite system A X = B */
 extern void DSYSV(const char *uplo, const int *N, const int *NRHS,
-		  double *A, const int *LDA, 
+		  double *A, const int *LDA,
 		  int *ipiv,
 		  double *B, const int *LDB,
 		  double *work, const int *lwork,
@@ -125,11 +125,11 @@ static void update_model(quad_model *model, double *W, double *r,
 
      /* solve s = W \ r, via the LAPACK symmetric-indefinite solver */
      DSYSV("U", &N, &one, W, &N, iwork, r, &N, work, &lwork, &info);
-     if (info != 0) { 
+     if (info != 0) {
 	  fprintf(stderr, "nlopt cquad: failure %d in dsysv", info);
 	  abort();
      }
-     
+
      /* update model */
      model->q0 += *c;
      for (k = 0; k < n; ++k) q[k] += g[k];
@@ -222,7 +222,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 			    double *x, /* in: initial guess, out: minimizer */
 			    double *minf,
 			    nlopt_stopping *stop,
-			    nlopt_algorithm model_alg, 
+			    nlopt_algorithm model_alg,
 			    double model_tolrel, int model_maxeval)
 {
      nlopt_result ret = NLOPT_SUCCESS;
@@ -234,7 +234,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
      char *fc_data = (char *) fc_data_;
      conservative_model model, *modelc;
      int feasible, feasible_cur;
-     
+
      sigma = (double *) malloc(sizeof(double) * (n*7 + m*2 + N*N + M*n + N
 						 + DSYSV_BLOCKSIZE * N));
      if (!sigma) return NLOPT_OUT_OF_MEMORY;
@@ -333,7 +333,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 		    *(stop->nevals_p)++;
 		    feasible_cur = 1;
 		    for (i = 0; i < m; ++i) {
-			 fcmp[s][i] = fcval_cur[i] = 
+			 fcmp[s][i] = fcval_cur[i] =
 			      fc(n, xcur, NULL, fc_data + fc_datum_size*i);
 			 feasible_cur = feasible_cur && (fcval_cur[i] <= 0);
 		    }
@@ -343,11 +343,11 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 			 feasible = 1;
 		    }
 		    if (nlopt_stop_forced(stop)) ret = NLOPT_FORCED_STOP;
-		    else if (nlopt_stop_evals(stop)) 
+		    else if (nlopt_stop_evals(stop))
 			 ret = NLOPT_MAXEVAL_REACHED;
-		    else if (nlopt_stop_time(stop)) 
+		    else if (nlopt_stop_time(stop))
 			 ret = NLOPT_MAXTIME_REACHED;
-		    else if (*minf < stop->minf_max) 
+		    else if (*minf < stop->minf_max)
 			 ret = NLOPT_MINF_MAX_REACHED;
 		    if (ret != NLOPT_SUCCESS) goto done;
 	       }
@@ -356,7 +356,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	       model.model.Q[j*n+j] = (fmp[1] + fmp[0]
 				       - 2*model.model.q0) / (dx[j]*dx[j]);
 	       for (i = 0; i < m; ++i) {
-		    modelc[i].model.q[j] = 
+		    modelc[i].model.q[j] =
 			 (fcmp[1][i] - fcmp[0][i]) / (2 * dx[j]);
 		    modelc[i].model.Q[j*n+j] = (fcmp[1][i] + fcmp[0][i]
 				      - 2*modelc[i].model.q0) / (dx[j]*dx[j]);
@@ -427,10 +427,10 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	       }
 
 	       if (cquad_verbose) {
-		    printf("cquad model converged to g=%g vs. f=%g:\n", 
+		    printf("cquad model converged to g=%g vs. f=%g:\n",
 			   gval, fcur);
 		    for (i = 0; i < MIN(cquad_verbose, m); ++i)
-			 printf("    cquad gc[%d]=%g vs. fc[%d]=%g\n", 
+			 printf("    cquad gc[%d]=%g vs. fc[%d]=%g\n",
 				i, gcval[i], i, fcval_cur[i]);
 	       }
 
@@ -438,7 +438,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	       iMnew = insert_new_point(n, xcur, x, M, X);
 	       update_model(&model.model, W, r, M, X, iMnew, fcur, iwork,work);
 	       for (i = 0; i < m; ++i)
-		    update_model(&modelc[i].model, W, r, M, X, iMnew, 
+		    update_model(&modelc[i].model, W, r, M, X, iMnew,
 				 fcval_cur[i], iwork,work);
 
 	       /* once we have reached a feasible solution, the
@@ -482,21 +482,21 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	       if (inner_done) break;
 
 	       if (fcur > gval)
-		    model.rho = MIN(10*model.rho, 
-				    1.1 * (model.rho + (fcur-gval) 
+		    model.rho = MIN(10*model.rho,
+				    1.1 * (model.rho + (fcur-gval)
 					   / wfunc(n, xcur, &model)));
 	       for (i = 0; i < m; ++i)
 		    if (fcval_cur[i] > gcval[i])
-			 modelc[i].rho = 
-			      MIN(10*modelc[i].rho, 
-				  1.1 * (modelc[i].rho 
-					 + (fcval_cur[i]-gcval[i]) 
+			 modelc[i].rho =
+			      MIN(10*modelc[i].rho,
+				  1.1 * (modelc[i].rho
+					 + (fcval_cur[i]-gcval[i])
 					 / wfunc(n, xcur, &modelc[i])));
-	       
+
 	       if (cquad_verbose)
 		    printf("cquad inner iteration: rho -> %g\n", model.rho);
 	       for (i = 0; i < MIN(cquad_verbose, m); ++i)
-		    printf("                 cquad rhoc[%d] -> %g\n", 
+		    printf("                 cquad rhoc[%d] -> %g\n",
 			   i, modelc[i].rho);
 	  }
 
@@ -505,7 +505,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	  if (nlopt_stop_x(stop, xcur, xprev))
 	       ret = NLOPT_XTOL_REACHED;
 	  if (ret != NLOPT_SUCCESS) goto done;
-	       
+
 	  /* update rho and sigma for iteration k+1 */
 	  model.rho = MAX(0.1 * model.rho, MMA_RHOMIN);
 	  if (cquad_verbose)
@@ -513,7 +513,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 	  for (i = 0; i < m; ++i)
 	       modelc[i].rho = MAX(0.1 * modelc[i].rho, MMA_RHOMIN);
 	  for (i = 0; i < MIN(cquad_verbose, m); ++i)
-	       printf("                 cquad rhoc[%d] -> %g\n", 
+	       printf("                 cquad rhoc[%d] -> %g\n",
 		      i, modelc[i].rho);
 	  if (k > 1) {
 	       for (j = 0; j < n; ++j) {
@@ -526,7 +526,7 @@ nlopt_result cquad_minimize(int n, nlopt_func f, void *f_data,
 		    }
 	       }
 	       for (j = 0; j < MIN(cquad_verbose, n); ++j)
-		    printf("                 cquad sigma[%d] -> %g\n", 
+		    printf("                 cquad sigma[%d] -> %g\n",
 			   j, sigma[j]);
 	  }
      }

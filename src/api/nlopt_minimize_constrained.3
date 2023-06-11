@@ -1,6 +1,6 @@
-.\" 
+.\"
 .\" Copyright (c) 2007 Massachusetts Institute of Technology
-.\" 
+.\"
 .\" Copying and distribution of this file, with or without modification,
 .\" are permitted in any medium without royalty provided the copyright
 .\" notice and this notice are preserved.
@@ -42,7 +42,7 @@ attempts to minimize a nonlinear function
 .I f
 of
 .I n
-design variables, subject to 
+design variables, subject to
 .I m
 nonlinear constraints described by the function
 .I fc
@@ -84,7 +84,7 @@ case where
 is zero (no explicit nonlinear constraints); the only algorithms that
 currently support positive
 .I m
-are 
+are
 .B NLOPT_LD_MMA
 and
 .BR NLOPT_LN_COBYLA .
@@ -108,11 +108,11 @@ minimizes an objective function
 .I f
 of the form:
 .sp
-.BI "      double f(int " "n" , 
+.BI "      double f(int " "n" ,
 .br
-.BI "               const double* " "x" , 
+.BI "               const double* " "x" ,
 .br
-.BI "               double* " "grad" , 
+.BI "               double* " "grad" ,
 .br
 .BI "               void* " "f_data" );
 .sp
@@ -143,16 +143,16 @@ for 0 <= i < n, if
 .I grad
 is non-NULL.
 Not all of the optimization algorithms (below) use the gradient information:
-for algorithms listed as "derivative-free," the 
+for algorithms listed as "derivative-free," the
 .I grad
 argument will always be NULL and need never be computed.  (For
 algorithms that do use gradient information, however,
 .I grad
 may still be NULL for some calls.)
 .sp
-The 
+The
 .I f_data
-argument is the same as the one passed to 
+argument is the same as the one passed to
 .BR nlopt_minimize_constrained (),
 and may be used to pass any additional data through to the function.
 (That is, it may be a pointer to some caller-defined data
@@ -205,16 +205,16 @@ and
 .B NLOPT_LN_COBYLA
 algorithms below.
 .sp
-In particular, the nonlinear constraints are of the form 
+In particular, the nonlinear constraints are of the form
 \fIfc\fR(\fIx\fR) <= 0, where the function
 .I fc
 is of the same form as the objective function described above:
 .sp
-.BI "      double fc(int " "n" , 
+.BI "      double fc(int " "n" ,
 .br
-.BI "                const double* " "x" , 
+.BI "                const double* " "x" ,
 .br
-.BI "                double* " "grad" , 
+.BI "                double* " "grad" ,
 .br
 .BI "                void* " "fc_datum" );
 .sp
@@ -232,13 +232,13 @@ is not NULL, then
 points to an array of length
 .I n
 which should (upon return) be set to the gradient of the function with
-respect to 
+respect to
 .IR x .
 (For any algorithm listed as "derivative-free" below, the
 .I grad
 argument will always be NULL and need never be computed.)
 .sp
-The 
+The
 .I fc_datum
 argument is based on the
 .I fc_data
@@ -259,7 +259,7 @@ will be passed an
 .I fc_datum
 argument equal to
 .I fc_data
-offset by i * 
+offset by i *
 .IR fc_datum_size .
 For example, suppose that you have a data structure of type "foo"
 that describes the data needed by each constraint, and you store
@@ -268,15 +268,15 @@ this case, you would pass "data" as the
 .I fc_data
 parameter to
 .BR nlopt_minimize_constrained ,
-and "sizeof(foo)" as the 
+and "sizeof(foo)" as the
 .I fc_datum_size
-parameter.  Then, your 
+parameter.  Then, your
 .I fc
-function would be called 
+function would be called
 .I m
 times for each point, and be passed &data[0] through &data[m-1] in sequence.
 .SH ALGORITHMS
-The 
+The
 .I algorithm
 parameter specifies the optimization algorithm (for more detail on
 these, see the README files in the source-code subdirectories), and
@@ -296,10 +296,10 @@ objective function to supply a gradient, whereas
 refers to derivative-based algorithms that require the objective
 function to supply a gradient.  (Especially for local optimization,
 derivative-based algorithms are generally superior to derivative-free
-ones: the gradient is good to have 
-.I if 
+ones: the gradient is good to have
+.I if
 you can compute it cheaply, e.g. via an adjoint method.)
-.TP 
+.TP
 .B NLOPT_GN_DIRECT_L
 Perform a global (G) derivative-free (N) optimization using the
 DIRECT-L search algorithm by Jones et al. as modified by Gablonsky et
@@ -318,19 +318,19 @@ and
 which are versions of DIRECT where the dimensions are not rescaled to
 a unit hypercube (which means that dimensions with larger bounds are
 given more weight).
-.TP 
+.TP
 .B NLOPT_GN_ORIG_DIRECT_L
 A global (G) derivative-free optimization using the DIRECT-L algorithm
 as above, along with
 .B NLOPT_GN_ORIG_DIRECT
-which is the original DIRECT algorithm.  Unlike 
-.B NLOPT_GN_DIRECT_L 
+which is the original DIRECT algorithm.  Unlike
+.B NLOPT_GN_DIRECT_L
 above, these two algorithms refer to code based on the original
 Fortran code of Gablonsky et al., which has some hard-coded
 limitations on the number of subdivisions etc. and does not support
 all of the NLopt stopping criteria, but on the other hand supports
 arbitrary nonlinear constraints as described above.
-.TP 
+.TP
 .B NLOPT_GD_STOGO
 Global (G) optimization using the StoGO algorithm by Madsen et al.  StoGO
 exploits gradient information (D) (which must be supplied by the
@@ -342,7 +342,7 @@ which is a randomized version of the StoGO search scheme.  The StoGO
 algorithms are only available if NLopt is compiled with C++ enabled,
 and should be linked via -lnlopt_cxx (via a C++ compiler, in order
 to link the C++ standard libraries).
-.TP 
+.TP
 .B NLOPT_LN_NELDERMEAD
 Perform a local (L) derivative-free (N) optimization, starting at
 .IR x ,
@@ -353,7 +353,7 @@ used with caution.  Anecdotal evidence, on the other hand, suggests
 that it works fairly well for discontinuous objectives.  See also
 .B NLOPT_LN_SBPLX
 below.
-.TP 
+.TP
 .B NLOPT_LN_SBPLX
 Perform a local (L) derivative-free (N) optimization, starting at
 .IR x ,
@@ -382,9 +382,9 @@ Luksan et al.
 .B NLOPT_LD_VAR2
 Local (L) gradient-based (D) optimization using a shifted limited-memory
 variable-metric method based on code by Luksan et al., supporting both
-unconstrained and bound-constrained optimization.  
+unconstrained and bound-constrained optimization.
 .B NLOPT_LD_VAR2
-uses a rank-2 method, while 
+uses a rank-2 method, while
 .B .B NLOPT_LD_VAR1
 is another variant using a rank-1 method.
 .TP
@@ -394,8 +394,8 @@ LBFGS-preconditioned truncated Newton method with steepest-descent
 restarting, based on code by Luksan et al., supporting both
 unconstrained and bound-constrained optimization.  There are several
 other variants of this algorithm:
-.B NLOPT_LD_TNEWTON_PRECOND 
-(same without restarting), 
+.B NLOPT_LD_TNEWTON_PRECOND
+(same without restarting),
 .B NLOPT_LD_TNEWTON_RESTART
 (same without preconditioning), and
 .B NLOPT_LD_TNEWTON
@@ -450,7 +450,7 @@ is also available, as
 .BR NLOPT_LN_NEWUOA ,
 but this algorithm ignores the bound constraints
 .I lb
-and 
+and
 .IR ub ,
 and so it should only be used for unconstrained problems.
 .SH STOPPING CRITERIA
@@ -517,7 +517,7 @@ Stop when the number of function evaluations exceeds
 .IR maxeval .
 (This is not a strict maximum: the number of function evaluations may
 exceed
-.I maxeval 
+.I maxeval
 slightly, depending upon the algorithm.)  Disabled
 if non-positive.
 .TP

@@ -36,7 +36,7 @@ program main
 
   call nlo_destroy(opt)
 
-  end 
+  end
 
   subroutine myfunc(val, n, x, grad, need_gradient, f_data)
   double precision val, x(n), grad(n)
@@ -46,7 +46,7 @@ program main
      grad(2) = 0.5 / dsqrt(x(2))
   endif
   val = dsqrt(x(2))
-  end 
+  end
 
   subroutine myconstraint(val, n, x, grad, need_gradient, d)
   integer need_gradient

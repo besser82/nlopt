@@ -15,8 +15,8 @@ typedef double (*bobyqa_func)(int n, const double *x, void *func_data);
 #define MAX2(a,b) ((a) >= (b) ? (a) : (b))
 #define IABS(x) ((x) < 0 ? -(x) : (x))
 
-static void update_(int *n, int *npt, double *bmat, 
-	double *zmat, int *ndim, double *vlag, double *beta, 
+static void update_(int *n, int *npt, double *bmat,
+	double *zmat, int *ndim, double *vlag, double *beta,
 	double *denom, int *knew, double *w)
 {
     /* System generated locals */
@@ -82,9 +82,9 @@ static void update_(int *n, int *npt, double *bmat,
 	    tempb = zmat[*knew + j * zmat_dim1] / temp;
 	    i__1 = *npt;
 	    for (i__ = 1; i__ <= i__1; ++i__) {
-		temp = tempa * zmat[i__ + zmat_dim1] + tempb * zmat[i__ + j * 
+		temp = tempa * zmat[i__ + zmat_dim1] + tempb * zmat[i__ + j *
 			zmat_dim1];
-		zmat[i__ + j * zmat_dim1] = tempa * zmat[i__ + j * zmat_dim1] 
+		zmat[i__ + j * zmat_dim1] = tempa * zmat[i__ + j * zmat_dim1]
 			- tempb * zmat[i__ + zmat_dim1];
 /* L20: */
 		zmat[i__ + zmat_dim1] = temp;
@@ -128,10 +128,10 @@ static void update_(int *n, int *npt, double *bmat,
 	tempb = (-(*beta) * w[jp] - tau * vlag[jp]) / *denom;
 	i__1 = jp;
 	for (i__ = 1; i__ <= i__1; ++i__) {
-	    bmat[i__ + j * bmat_dim1] = bmat[i__ + j * bmat_dim1] + tempa * 
+	    bmat[i__ + j * bmat_dim1] = bmat[i__ + j * bmat_dim1] + tempa *
 		    vlag[i__] + tempb * w[i__];
 	    if (i__ > *npt) {
-		bmat[jp + (i__ - *npt) * bmat_dim1] = bmat[i__ + j * 
+		bmat[jp + (i__ - *npt) * bmat_dim1] = bmat[i__ + j *
 			bmat_dim1];
 	    }
 /* L60: */
@@ -139,18 +139,18 @@ static void update_(int *n, int *npt, double *bmat,
     }
 } /* update_ */
 
-static nlopt_result rescue_(int *n, int *npt, const double *xl, const double *xu, 
+static nlopt_result rescue_(int *n, int *npt, const double *xl, const double *xu,
 		    /* int *maxfun */
 		    nlopt_stopping *stop,
 		    bobyqa_func calfun, void *calfun_data,
         double *xbase, double *xpt, double *fval, double *xopt, double *gopt,
-	 double *hq, double *pq, double *bmat, double *zmat, 
+	 double *hq, double *pq, double *bmat, double *zmat,
 	int *ndim, double *sl, double *su, /* int *nf,  */
 	double *delta, int *kopt, double *vlag, double *
 	ptsaux, double *ptsid, double *w)
 {
     /* System generated locals */
-    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1, 
+    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1,
 	    zmat_offset, i__1, i__2, i__3;
     double d__1, d__2, d__3, d__4;
 
@@ -338,13 +338,13 @@ static nlopt_result rescue_(int *n, int *npt, const double *xl, const double *xu
 	    temp = one / (ptsaux[(j << 1) + 1] - ptsaux[(j << 1) + 2]);
 	    bmat[jp + j * bmat_dim1] = -temp + one / ptsaux[(j << 1) + 1];
 	    bmat[jpn + j * bmat_dim1] = temp + one / ptsaux[(j << 1) + 2];
-	    bmat[j * bmat_dim1 + 1] = -bmat[jp + j * bmat_dim1] - bmat[jpn + 
+	    bmat[j * bmat_dim1 + 1] = -bmat[jp + j * bmat_dim1] - bmat[jpn +
 		    j * bmat_dim1];
-	    zmat[j * zmat_dim1 + 1] = sqrt(2.) / (d__1 = ptsaux[(j << 1) + 1] 
+	    zmat[j * zmat_dim1 + 1] = sqrt(2.) / (d__1 = ptsaux[(j << 1) + 1]
 		    * ptsaux[(j << 1) + 2], fabs(d__1));
-	    zmat[jp + j * zmat_dim1] = zmat[j * zmat_dim1 + 1] * ptsaux[(j << 
+	    zmat[jp + j * zmat_dim1] = zmat[j * zmat_dim1 + 1] * ptsaux[(j <<
 		    1) + 2] * temp;
-	    zmat[jpn + j * zmat_dim1] = -zmat[j * zmat_dim1 + 1] * ptsaux[(j 
+	    zmat[jpn + j * zmat_dim1] = -zmat[j * zmat_dim1 + 1] * ptsaux[(j
 		    << 1) + 1] * temp;
 	} else {
 	    bmat[j * bmat_dim1 + 1] = -one / ptsaux[(j << 1) + 1];
@@ -368,7 +368,7 @@ static nlopt_result rescue_(int *n, int *npt, const double *xl, const double *xu
 	    if (iq > *n) {
 		iq -= *n;
 	    }
-	    ptsid[k] = (double) ip + (double) iq / (double) np + 
+	    ptsid[k] = (double) ip + (double) iq / (double) np +
 		    sfrac;
 	    temp = one / (ptsaux[(ip << 1) + 1] * ptsaux[(iq << 1) + 1]);
 	    zmat[(k - np) * zmat_dim1 + 1] = temp;
@@ -468,7 +468,7 @@ L120:
 	    if (ip > 0) {
 		sum = w[*npt + ip] * ptsaux[(ip << 1) + 1];
 	    }
-	    iq = (int) ((double) np * ptsid[k] - (double) (ip * 
+	    iq = (int) ((double) np * ptsid[k] - (double) (ip *
 		    np));
 	    if (iq > 0) {
 		iw = 1;
@@ -708,7 +708,7 @@ L260:
 		pq[k] += temp;
 	    } else {
 		ip = (int) ptsid[k];
-		iq = (int) ((double) np * ptsid[k] - (double) (ip 
+		iq = (int) ((double) np * ptsid[k] - (double) (ip
 			* np));
 		ihq = (iq * iq + iq) / 2;
 		if (ip == 0) {
@@ -740,15 +740,15 @@ L350:
     return NLOPT_SUCCESS;
 } /* rescue_ */
 
-static void altmov_(int *n, int *npt, double *xpt, 
-	double *xopt, double *bmat, double *zmat, int *ndim, 
-	double *sl, double *su, int *kopt, int *knew, 
+static void altmov_(int *n, int *npt, double *xpt,
+	double *xopt, double *bmat, double *zmat, int *ndim,
+	double *sl, double *su, int *kopt, int *knew,
 	double *adelt, double *xnew, double *xalt, double *
-	alpha, double *cauchy, double *glag, double *hcol, 
+	alpha, double *cauchy, double *glag, double *hcol,
 	double *w)
 {
     /* System generated locals */
-    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1, 
+    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1,
 	    zmat_offset, i__1, i__2;
     double d__1, d__2, d__3, d__4;
 
@@ -1158,10 +1158,10 @@ L200:
     return;
 } /* altmov_ */
 
-static void trsbox_(int *n, int *npt, double *xpt, 
-	double *xopt, double *gopt, double *hq, double *pq, 
-	double *sl, double *su, double *delta, double *xnew, 
-	double *d__, double *gnew, double *xbdi, double *s, 
+static void trsbox_(int *n, int *npt, double *xpt,
+	double *xopt, double *gopt, double *hq, double *pq,
+	double *sl, double *su, double *delta, double *xnew,
+	double *d__, double *gnew, double *xbdi, double *s,
 	double *hs, double *hred, double *dsq, double *crvmin)
 {
     /* System generated locals */
@@ -1707,17 +1707,17 @@ L210:
     goto L120;
 } /* trsbox_ */
 
-static nlopt_result prelim_(int *n, int *npt, double *x, 
-	const double *xl, const double *xu, double *rhobeg, 
+static nlopt_result prelim_(int *n, int *npt, double *x,
+	const double *xl, const double *xu, double *rhobeg,
 		    nlopt_stopping *stop,
 		    bobyqa_func calfun, void *calfun_data,
 	 double *xbase, double *xpt, double *fval,
-	 double *gopt, double *hq, double *pq, double *bmat, 
-	double *zmat, int *ndim, double *sl, double *su, 
+	 double *gopt, double *hq, double *pq, double *bmat,
+	double *zmat, int *ndim, double *sl, double *su,
 		    int *kopt)
 {
     /* System generated locals */
-    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1, 
+    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1,
 	    zmat_offset, i__1, i__2;
     double d__1, d__2, d__3, d__4;
 
@@ -1917,13 +1917,13 @@ L50:
 		}
 	    }
 	    bmat[nfx * bmat_dim1 + 1] = -(stepa + stepb) / (stepa * stepb);
-	    bmat[nf + nfx * bmat_dim1] = -half / xpt[nf - *n + nfx * 
+	    bmat[nf + nfx * bmat_dim1] = -half / xpt[nf - *n + nfx *
 		    xpt_dim1];
-	    bmat[nf - *n + nfx * bmat_dim1] = -bmat[nfx * bmat_dim1 + 1] - 
+	    bmat[nf - *n + nfx * bmat_dim1] = -bmat[nfx * bmat_dim1 + 1] -
 		    bmat[nf + nfx * bmat_dim1];
 	    zmat[nfx * zmat_dim1 + 1] = sqrt(two) / (stepa * stepb);
 	    zmat[nf + nfx * zmat_dim1] = sqrt(half) / rhosq;
-	    zmat[nf - *n + nfx * zmat_dim1] = -zmat[nfx * zmat_dim1 + 1] - 
+	    zmat[nf - *n + nfx * zmat_dim1] = -zmat[nfx * zmat_dim1 + 1] -
 		    zmat[nf + nfx * zmat_dim1];
 	}
 
@@ -1949,20 +1949,20 @@ L50:
     return NLOPT_SUCCESS;
 } /* prelim_ */
 
-static nlopt_result bobyqb_(int *n, int *npt, double *x, 
+static nlopt_result bobyqb_(int *n, int *npt, double *x,
 	const double *xl, const double *xu, double *rhobeg, double *
-	rhoend, 
+	rhoend,
 			    nlopt_stopping *stop,
 			    bobyqa_func calfun, void *calfun_data,
 			    double *minf,
-        double *xbase, 
+        double *xbase,
 	double *xpt, double *fval, double *xopt, double *gopt,
-	 double *hq, double *pq, double *bmat, double *zmat, 
-	int *ndim, double *sl, double *su, double *xnew, 
+	 double *hq, double *pq, double *bmat, double *zmat,
+	int *ndim, double *sl, double *su, double *xnew,
 	double *xalt, double *d__, double *vlag, double *w)
 {
     /* System generated locals */
-    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1, 
+    int xpt_dim1, xpt_offset, bmat_dim1, bmat_offset, zmat_dim1,
 	    zmat_offset, i__1, i__2, i__3;
     double d__1, d__2, d__3, d__4;
 
@@ -2072,7 +2072,7 @@ static nlopt_result bobyqb_(int *n, int *npt, double *x,
 /*     initial XOPT is set too. The branch to label 720 occurs if MAXFUN is */
 /*     less than NPT. GOPT will be updated if KOPT is different from KBASE. */
 
-    rc2 = prelim_(n, npt, &x[1], &xl[1], &xu[1], rhobeg, 
+    rc2 = prelim_(n, npt, &x[1], &xl[1], &xu[1], rhobeg,
 		  stop, calfun, calfun_data,
 	    &xbase[1], &xpt[xpt_offset], &fval[1], &gopt[1], &hq[1], &pq[1], &bmat[
 	    bmat_offset], &zmat[zmat_offset], ndim, &sl[1], &su[1], &kopt);
@@ -2299,7 +2299,7 @@ L90:
 		++ih;
 		hq[ih] = hq[ih] + w[i__] * xopt[j] + xopt[i__] * w[j];
 /* L170: */
-		bmat[*npt + i__ + j * bmat_dim1] = bmat[*npt + j + i__ * 
+		bmat[*npt + i__ + j * bmat_dim1] = bmat[*npt + j + i__ *
 			bmat_dim1];
 	    }
 	}
@@ -2331,7 +2331,7 @@ L90:
 L190:
     nfsav = *(stop->nevals_p);
     kbase = kopt;
-    rc2 = rescue_(n, npt, &xl[1], &xu[1], 
+    rc2 = rescue_(n, npt, &xl[1], &xu[1],
 		  stop, calfun, calfun_data,
 		  &xbase[1], &xpt[xpt_offset], &fval[1], &xopt[1], &gopt[1],
 		  &hq[1], &pq[1], &bmat[bmat_offset], &zmat[zmat_offset], ndim,
@@ -2353,9 +2353,9 @@ L190:
 	    xoptsq += d__1 * d__1;
 	}
     }
-    if (rc2 != NLOPT_SUCCESS) { 
+    if (rc2 != NLOPT_SUCCESS) {
       rc = rc2;
-      goto L720; 
+      goto L720;
     }
     nresc = *(stop->nevals_p);
     if (nfsav < *(stop->nevals_p)) {
@@ -2866,7 +2866,7 @@ L360:
 	    i__2 = *npt;
 	    for (k = 1; k <= i__2; ++k) {
 /* L620: */
-		sum = sum + bmat[k + i__ * bmat_dim1] * vlag[k] + xpt[k + i__ 
+		sum = sum + bmat[k + i__ * bmat_dim1] * vlag[k] + xpt[k + i__
 			* xpt_dim1] * w[k];
 	    }
 	    if (xopt[i__] == sl[i__]) {
@@ -3068,8 +3068,8 @@ static double rescale_fun(int n, const double *x, void *d_)
      return d->f(U(n), d->xs, NULL, d->f_data);
 }
 
-nlopt_result bobyqa(int n, int npt, double *x, 
-		    const double *xl, const double *xu, 
+nlopt_result bobyqa(int n, int npt, double *x,
+		    const double *xl, const double *xu,
 		    const double *dx,
 		    nlopt_stopping *stop, double *minf,
 		    nlopt_func f, void *f_data)
@@ -3079,7 +3079,7 @@ nlopt_result bobyqa(int n, int npt, double *x,
     double d__1, d__2;
 
     /* Local variables */
-    int j, id, np, iw, igo, ihq, ixb, ixa, ifv, isl, jsl, ipq, ivl, ixn, 
+    int j, id, np, iw, igo, ihq, ixb, ixa, ifv, isl, jsl, ipq, ivl, ixn,
 	    ixo, ixp, isu, jsu, ndim;
     double temp, zero;
     int ibmat, izmat;
@@ -3089,7 +3089,7 @@ nlopt_result bobyqa(int n, int npt, double *x,
     nlopt_result ret;
     double *s = NULL, *sxl = NULL, *sxu = NULL, *xs = NULL;
     rescale_fun_data calfun_data;
-    
+
     /* SGJ 2010: rescale parameters to make the initial step sizes dx
                  equal in all directions */
     s = nlopt_compute_rescaling(U(n), dx);
@@ -3262,7 +3262,7 @@ nlopt_result bobyqa(int n, int npt, double *x,
 
     ret = bobyqb_(&n, &npt, &x[1], &xl[1], &xu[1], &rhobeg, &rhoend,
 		  stop, rescale_fun, &calfun_data, minf,
-		  &w[ixb], &w[ixp], &w[ifv], &w[ixo], &w[igo], &w[ihq], &w[ipq], 
+		  &w[ixb], &w[ixp], &w[ifv], &w[ixo], &w[igo], &w[ihq], &w[ipq],
 		  &w[ibmat], &w[izmat], &ndim, &w[isl], &w[isu], &w[ixn], &w[ixa],
 		  &w[id], &w[ivl], &w[iw]);
 

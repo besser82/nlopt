@@ -50,7 +50,7 @@ void Gradient_Shekel(RCRVector x, RVector &grad) {
 
 
 /******************** Unimodal functions ******************/
- 
+
 void Domain_Rosenbrock(RTBox box) {
   box.lb=-10.0 ; box.ub=10.0 ;
 }
@@ -115,7 +115,7 @@ void Domain_Paviani(RTBox box) {
  box.lb=2.001 ; box.ub=9.999 ;
 }
 
-double Objective_Paviani(RCRVector x) { 
+double Objective_Paviani(RCRVector x) {
   double a,b,sum=0.0, mul=1.0 ;
   int n=x.GetLength() ;
   for (int i=0 ; i<n ; i++) {
@@ -259,7 +259,7 @@ void Domain_Hansen(RTBox box) {
 
 double Objective_Hansen(RCRVector x) {
   return (cos(1.0)+2.0*cos(x(0)+2.0)+3.0*cos(2.0*x(0)+3.0)+4.0*cos(3.0*x(0)
-        +4.0)+5.0*cos(4.0*x(0)+5.0))*(cos(2.0*x(1)+1.0)+2.0*cos(3.0*x(1)+2.0)   
+        +4.0)+5.0*cos(4.0*x(0)+5.0))*(cos(2.0*x(1)+1.0)+2.0*cos(3.0*x(1)+2.0)
         +3.0*cos(4.0*x(1)+3.0)+4.0*cos(5.0*x(1)+4.0)+5.0*cos(6.0*x(1)+5.0));
 }
 
@@ -393,7 +393,7 @@ void Domain_Camel6(RTBox box) {
 
 double Objective_Camel6(RCRVector x) {
   double x1=x(0),x2=x(1) ;
-  return 4.0*x1*x1-0.21E1*pow(x1,4.0)+pow(x1,6.0)/3+x1*x2-4.0*x2*x2 
+  return 4.0*x1*x1-0.21E1*pow(x1,4.0)+pow(x1,6.0)/3+x1*x2-4.0*x2*x2
     + 4.0*pow(x2,4.0);
 }
 

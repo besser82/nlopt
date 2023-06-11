@@ -6,7 +6,7 @@ functions with and without gradient information.  It is designed as
 a simple, unified interface and packaging of several free/open-source
 nonlinear optimization libraries.
 
-The latest release can be downloaded from the [NLopt releases](https://github.com/stevengj/nlopt/releases) page on Github, and the 
+The latest release can be downloaded from the [NLopt releases](https://github.com/stevengj/nlopt/releases) page on Github, and the
 [NLopt manual](
 https://nlopt.readthedocs.io/en/latest/) is hosted on readthedocs.
 

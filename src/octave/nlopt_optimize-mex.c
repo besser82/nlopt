@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /* Matlab MEX interface to NLopt, and in particular to nlopt_optimize */
@@ -36,7 +36,7 @@ static double struct_val_default(const mxArray *s, const char *name, double dflt
 {
      mxArray *val = mxGetField(s, 0, name);
      if (val) {
-	  CHECK0(mxIsNumeric(val) && !mxIsComplex(val) 
+	  CHECK0(mxIsNumeric(val) && !mxIsComplex(val)
 		&& mxGetM(val) * mxGetN(val) == 1,
 		"opt fields, other than xtol_abs, must be real scalars");
 	  return mxGetScalar(val);
@@ -49,7 +49,7 @@ static double *struct_arrval(const mxArray *s, const char *name, unsigned n,
 {
      mxArray *val = mxGetField(s, 0, name);
      if (val) {
-	  CHECK0(mxIsNumeric(val) && !mxIsComplex(val) 
+	  CHECK0(mxIsNumeric(val) && !mxIsComplex(val)
 		&& mxGetM(val) * mxGetN(val) == n,
 		"opt vector field is not of length n");
 	  return mxGetPr(val);
@@ -97,11 +97,11 @@ static double user_function(unsigned n, const double *x,
   d->plhs[0] = d->plhs[1] = NULL;
   memcpy(mxGetPr(d->prhs[d->xrhs]), x, n * sizeof(double));
 
-  CHECK0(0 == mexCallMATLAB(gradient ? 2 : 1, d->plhs, 
+  CHECK0(0 == mexCallMATLAB(gradient ? 2 : 1, d->plhs,
 			   d->nrhs, d->prhs, d->f),
 	"error calling user function");
 
-  CHECK0(mxIsNumeric(d->plhs[0]) && !mxIsComplex(d->plhs[0]) 
+  CHECK0(mxIsNumeric(d->plhs[0]) && !mxIsComplex(d->plhs[0])
 	&& mxGetM(d->plhs[0]) * mxGetN(d->plhs[0]) == 1,
 	"user function must return real scalar");
   f = mxGetScalar(d->plhs[0]);
@@ -128,7 +128,7 @@ static void user_pre(unsigned n, const double *x, const double *v,
   memcpy(mxGetPr(d->prhs[d->xrhs]), x, n * sizeof(double));
   memcpy(mxGetPr(d->prhs[d->xrhs + 1]), v, n * sizeof(double));
 
-  CHECK0(0 == mexCallMATLAB(1, d->plhs, 
+  CHECK0(0 == mexCallMATLAB(1, d->plhs,
 			    d->nrhs, d->prhs, d->f),
 	 "error calling user function");
 
@@ -183,7 +183,7 @@ nlopt_opt make_opt(const mxArray *opts, unsigned n)
      if (struct_arrval(opts, "initial_step", n, NULL))
 	  nlopt_set_initial_step(opt,
 				 struct_arrval(opts, "initial_step", n, NULL));
-     
+
      if (mxGetField(opts, 0, "local_optimizer")) {
 	  const mxArray *local_opts = mxGetField(opts, 0, "local_optimizer");
 	  CHECK1(mxIsStruct(local_opts),
@@ -214,7 +214,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
 
      /* options = prhs[0] */
      CHECK(mxIsStruct(prhs[0]), "opt must be a struct");
-     
+
      /* x0 = prhs[1] */
      CHECK(mxIsDouble(prhs[1]) && !mxIsComplex(prhs[1])
 	   && (mxGetM(prhs[1]) == 1 || mxGetN(prhs[1]) == 1),
@@ -284,7 +284,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
      if ((mx = mxGetField(prhs[0], 0, "fc"))) {
 	  int j, m;
 	  double *fc_tol;
-	  
+
 	  CHECK(mxIsCell(mx), "fc must be a Cell array");
 	  m = mxGetM(mx) * mxGetN(mx);;
 	  dfc = (user_function_data *) mxCalloc(m, sizeof(user_function_data));
@@ -321,7 +321,7 @@ void mexFunction(int nlhs, mxArray *plhs[],
      if ((mx = mxGetField(prhs[0], 0, "h"))) {
 	  int j, m;
 	  double *h_tol;
-	  
+
 	  CHECK(mxIsCell(mx), "h must be a Cell array");
 	  m = mxGetM(mx) * mxGetN(mx);;
 	  dh = (user_function_data *) mxCalloc(m, sizeof(user_function_data));

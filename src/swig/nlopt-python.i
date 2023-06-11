@@ -132,7 +132,7 @@ static double func_python(unsigned n, const double *x, double *grad, void *f)
   PyObject *gradpy = grad
     ? PyArray_SimpleNewFromData(1, &sz, NPY_DOUBLE, grad)
     : PyArray_SimpleNew(1, &sz0, NPY_DOUBLE);
-  
+
   PyObject *arglist = Py_BuildValue("OO", xpy, gradpy);
   PyObject *result = PyEval_CallObject((PyObject *) f, arglist);
   Py_DECREF(arglist);
@@ -169,7 +169,7 @@ static void mfunc_python(unsigned m, double *result,
   PyObject *gradpy = grad
     ? PyArray_SimpleNewFromData(2, mnsz, NPY_DOUBLE, grad)
     : PyArray_SimpleNew(1, &sz0, NPY_DOUBLE);
-  
+
   PyObject *arglist = Py_BuildValue("OOO", rpy, xpy, gradpy);
   PyObject *res = PyEval_CallObject((PyObject *) f, arglist);
   Py_XDECREF(res);

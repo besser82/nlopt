@@ -7,17 +7,17 @@
  * distribute, sublicense, and/or sell copies of the Software, and to
  * permit persons to whom the Software is furnished to do so, subject to
  * the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
  * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include <stdlib.h>
@@ -136,13 +136,13 @@ nlopt_result isres_minimize(int n, nlopt_func f, void *f_data,
 	       double gpenalty;
 	       ++ *(stop->nevals_p);
 	       fval[k] = f(n, xs + k*n, NULL, f_data);
-	       if (nlopt_stop_forced(stop)) { 
+	       if (nlopt_stop_forced(stop)) {
 		    ret = NLOPT_FORCED_STOP; goto done; }
 	       penalty[k] = 0;
 	       for (c = 0; c < m; ++c) { /* inequality constraints */
 		    nlopt_eval_constraint(results, NULL,
 					  fc + c, n, xs + k*n);
-		    if (nlopt_stop_forced(stop)) { 
+		    if (nlopt_stop_forced(stop)) {
 			 ret = NLOPT_FORCED_STOP; goto done; }
 		    for (ires = 0; ires < fc[c].m; ++ires) {
 			 double gval = results[ires];
@@ -155,7 +155,7 @@ nlopt_result isres_minimize(int n, nlopt_func f, void *f_data,
 	       for (c = m; c < mp; ++c) { /* equality constraints */
 		    nlopt_eval_constraint(results, NULL,
 					  h + (c-m), n, xs + k*n);
-		    if (nlopt_stop_forced(stop)) { 
+		    if (nlopt_stop_forced(stop)) {
 			 ret = NLOPT_FORCED_STOP; goto done; }
 		    for (ires = 0; ires < h[c-m].m; ++ires) {
 			 double hval = results[ires];
@@ -175,11 +175,11 @@ nlopt_result isres_minimize(int n, nlopt_func f, void *f_data,
 		   && (fval[k] <= *minf || minf_gpenalty > 0)
 		   && ((feasible ? 0 : penalty[k]) != minf_penalty
 		       || fval[k] != *minf)) {
-		    if (fval[k] < stop->minf_max && feasible) 
+		    if (fval[k] < stop->minf_max && feasible)
 			 ret = NLOPT_MINF_MAX_REACHED;
 		    else if (!nlopt_isinf(*minf)) {
 			 if (nlopt_stop_f(stop, fval[k], *minf)
-			     && nlopt_stop_f(stop, feasible ? 0 : penalty[k], 
+			     && nlopt_stop_f(stop, feasible ? 0 : penalty[k],
 					     minf_penalty))
 			      ret = NLOPT_FTOL_REACHED;
 			 else if (nlopt_stop_x(stop, xs+k*n, x))
@@ -238,12 +238,12 @@ nlopt_result isres_minimize(int n, nlopt_func f, void *f_data,
 	       ri = irank[i];
 	       for (j = 0; j < n; ++j) {
 		    double sigmamax = (ub[j] - lb[j]) / sqrt(n);
-		    sigmas[rk*n+j] = sigmas[ri*n+j] 
+		    sigmas[rk*n+j] = sigmas[ri*n+j]
 			 * exp(taup_rand + tau*nlopt_nrand(0,1));
 		    if (sigmas[rk*n+j] > sigmamax)
 			 sigmas[rk*n+j] = sigmamax;
 		    do {
-			 xs[rk*n+j] = xs[ri*n+j] 
+			 xs[rk*n+j] = xs[ri*n+j]
 			      + sigmas[rk*n+j] * nlopt_nrand(0,1);
 		    } while (xs[rk*n+j] < lb[j] || xs[rk*n+j] > ub[j]);
 		    sigmas[rk*n+j] = sigmas[ri*n+j] + ALPHA*(sigmas[rk*n+j]
@@ -265,15 +265,15 @@ nlopt_result isres_minimize(int n, nlopt_func f, void *f_data,
 			    outside the bounds */
 			 double sigmamax = (ub[j] - lb[j]) / sqrt(n);
 			 double sigi = sigmas[rk*n+j];
-			 sigmas[rk*n+j] *= exp(taup_rand 
+			 sigmas[rk*n+j] *= exp(taup_rand
 					       + tau*nlopt_nrand(0,1));
 			 if (sigmas[rk*n+j] > sigmamax)
 			      sigmas[rk*n+j] = sigmamax;
 			 do {
-			      xs[rk*n+j] = xi 
+			      xs[rk*n+j] = xi
 				   + sigmas[rk*n+j] * nlopt_nrand(0,1);
 			 } while (xs[rk*n+j] < lb[j] || xs[rk*n+j] > ub[j]);
-			 sigmas[rk*n+j] = sigi 
+			 sigmas[rk*n+j] = sigi
 			      + ALPHA * (sigmas[rk*n+j] - sigi);
 		    }
 	       }

@@ -32,9 +32,9 @@ int main(int argc, char **argv)
 
   info = direct_optimize(tst_obj, NULL, n, l, u, x, &minf,
 			 maxits, 500,
-			 0, 0, 0, 0, 
+			 0, 0, 0, 0,
                          0.0, -1.0,
-                         &force_stop, 
+                         &force_stop,
                          DIRECT_UNKNOWN_FGLOBAL, 0,
 			 stdout, DIRECT_GABLONSKY);
 

@@ -1,4 +1,4 @@
-#include "linalg.h" 
+#include "linalg.h"
 #include "tools.h"
 #include "stogo_config.h"
 
@@ -14,5 +14,5 @@ double Objective_Rosenbrock(RCRVector x) {
 
 void Gradient_Rosenbrock(RCRVector x, RCRVector grad) {
   grad(0)=200*(x(1)-x(0)*x(0))*(-2*x(0))-2*(1-x(0));
-  grad(1)=200*(x(1)-x(0)*x(0));   
+  grad(1)=200*(x(1)-x(0)*x(0));
 }

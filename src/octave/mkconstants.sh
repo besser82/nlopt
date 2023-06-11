@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/sh
 
 names=`egrep 'NLOPT_[LG][ND]|NLOPT_AUGLAG|NLOPT_G_MLSL' ../api/nlopt.h |sed 's/ //g' |tr = , |cut -d, -f1`
 i=0
@@ -19,7 +19,7 @@ for n in $names; do
 function val = $n
   val = $i;
 EOF
-    fi  
+    fi
     i=`expr $i + 1`
 done
 

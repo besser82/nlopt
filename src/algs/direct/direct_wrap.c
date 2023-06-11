@@ -45,7 +45,7 @@ direct_return_code direct_optimize(
      int dimension,
      const double *lower_bounds, const double *upper_bounds,
 
-     double *x, double *minf, 
+     double *x, double *minf,
 
      int max_feval, int max_iter,
      double start, double maxtime,
@@ -85,9 +85,9 @@ direct_return_code direct_optimize(
 	  l[i] = lower_bounds[i];
 	  u[i] = upper_bounds[i];
      }
-     
+
      direct_direct_(f, x, &dimension, &magic_eps, magic_eps_abs,
-		    &max_feval, &max_iter, 
+		    &max_feval, &max_iter,
 		    start, maxtime, force_stop,
 		    minf,
 		    l, u,
